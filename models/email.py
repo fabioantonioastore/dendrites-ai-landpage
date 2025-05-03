@@ -6,4 +6,4 @@ from sqlalchemy.orm import mapped_column
 class Email(Base):
     __tablename__ = "emails"
 
-    email = mapped_column(String, unique=True)
+    email = mapped_column(String, unique=True, primary_key=True)
