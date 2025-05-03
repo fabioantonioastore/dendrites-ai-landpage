@@ -1,6 +1,7 @@
 from typing import Iterable, AsyncIterator
 
 from sqlalchemy import select
+from sqlalchemy.exc import NoResultFound, IntegrityError
 from fastapi import HTTPException
 
 from crud import CRUD
@@ -24,14 +25,14 @@ class EmailCRUD(CRUD):
                 yield email
 
     @classmethod
-    async def get_email_by_str(cls, email: str) -> Email:
+    async def get_email_by_str(cls, email: str) -> Email | None:
         async with cls.session_factory() as session:
             try:
                 statement = select(Email).where(Email.email == email)
                 result = await session.execute(statement)
                 return result.scalars().one()
-            except HTTPException as error:
-                raise error
+            except NoResultFound:
+                return None
 
     @classmethod
     async def get_emails_by_str(cls, emails: Iterable[str]) -> list[Email]:
@@ -44,15 +45,15 @@ class EmailCRUD(CRUD):
                 raise error
 
     @classmethod
-    async def create_email(cls, email: Email) -> Email:
+    async def create_email(cls, email: Email) -> Email | None:
         async with cls.session_factory() as session:
             try:
                 session.add(email)
                 await session.commit()
                 return email
-            except HTTPException as error:
+            except IntegrityError as error:
                 await session.rollback()
-                raise error
+                return None
 
     @classmethod
     async def create_emails(cls, emails: Iterable[Email]) -> Iterable[Email]:
@@ -114,4 +115,17 @@ class EmailCRUD(CRUD):
                 return "deleted"
             except HTTPException as error:
                 await session.rollback()
+                raise error
+
+    @classmethod
+    async def delete_all(cls) -> str:
+        async with cls.session_factory() as session:
+            try:
+                statement = select(Email)
+                result = await session.stream(statement)
+                async for email in result.scalars():
+                    await session.delete(email)
+                await session.commit()
+                return "deleted"
+            except Exception as error:
                 raise error
