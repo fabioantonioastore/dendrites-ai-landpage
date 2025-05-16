@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dendrites AI | IA sem código para todos</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #2D2D2D;
+            --secondary: #666666;
+            --accent: #444444;
+            --light: #F5F5F5;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo img {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(68, 68, 68, 0.4);
+        }
+
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .cta {
+            padding: 100px 0;
+            text-align: center;
+            background-color: var(--light);
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 40px auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #333333;
+        }
+
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #B8C5D6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #B8C5D6;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--accent);
+        }
+
+        .quote-container {
+            margin: 40px 0;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        .quote-author {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/static/logo.png" alt="Logo">
+                    Dendrites AI
+                </div>
+                <a href="#signup" class="btn">Reservar meu acesso antecipado</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Crie Agentes de IA Sem Uma Linha de Código</h1>
+            <p>Democratizando a inteligência artificial com uma plataforma no-code para todos. Transforme suas ideias em soluções de IA em minutos.</p>
+            <a href="#signup" class="btn">Reservar meu acesso antecipado</a>
+
+            <div class="quote-container">
+                <div class="quote-text" id="quote-text">
+                    A inovação distingue entre um líder e um seguidor.
+                </div>
+                <div class="quote-author" id="quote-author">Steve Jobs</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recursos Inovadores</h2>
+                <p>Descubra como a Dendrites AI está tornando a inteligência artificial acessível para todos.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">1</div>
+                    <h3>Interface Drag-and-Drop</h3>
+                    <p>Crie agentes de IA arrastando blocos pré-configurados, sem necessidade de codificação.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">2</div>
+                    <h3>Templates Pré-treinados</h3>
+                    <p>Comece rapidamente com agentes prontos para análise de dados, chatbots e reconhecimento de imagens.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">3</div>
+                    <h3>AutoML Integrado</h3>
+                    <p>Treinamento automatizado que escolhe os melhores algoritmos para seus dados.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">4</div>
+                    <h3>Implantação em 1 Clique</h3>
+                    <p>Publique seu agente de IA instantaneamente, com APIs prontas para integração.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">5</div>
+                    <h3>Explicações Simples</h3>
+                    <p>Entenda como seu agente toma decisões com relatórios explicativos em linguagem clara.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">6</div>
+                    <h3>Marketplace de Agentes</h3>
+                    <p>Compartilhe ou venda suas criações na comunidade Dendrites AI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="signup">
+        <div class="container">
+            <div class="section-title">
+                <h2>Reserve o seu acesso antecipado</h2>
+                <p>Inscreva-se para receber notificações quando lançarmos e seja um dos primeiros a usar.</p>
+            </div>
+
+            <div class="form-container">
+                <form id="signup-form" action="http://localhost:8000/" method="post">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nome completo" required name="name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Seu melhor e-mail" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="telefone" name="number" placeholder="DDD + Telefone" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Reservar meu acesso antecipado</button>
+                    <div class="success-message" id="success-message">
+                        Inscrição realizada com sucesso! Em breve entraremos em contato.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dendrites AI</h3>
+                    <p>Democratizando a inteligência artificial para todos através de uma plataforma no-code intuitiva.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#">Início</a></li>
+                        <li><a href="#">Recursos</a></li>
+                        <li><a href="#">Quem Somos</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Casos de Uso</h3>
+                    <ul>
+                        <li><a href="#">Pequenas Empresas</a></li>
+                        <li><a href="#">Educação</a></li>
+                        <li><a href="#">Agricultura</a></li>
+                        <li><a href="#">Saúde</a></li>
+                        <li><a href="#">Varejo</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><a href="mailto:contato@dendritesai.com.br">contato@dendritesai.com.br</a></li>
+                        <li><a href="tel:+5500000000000">+55 (00) 00000-0000</a></li>
+                        <li>Centro-Oeste do Espírito Santo, Brasil</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 Dendrites AI. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const quotes = [
+            { text: "O verdadeiro progresso é aquele que coloca a tecnologia ao alcance de todos.", author: "Henry Ford" },
+            { text: "A perfeição não é alcançada quando não há mais nada a adicionar, mas quando não há mais nada a tirar.", author: "Antoine de Saint-Exupéry" },
+            { text: "Se você quer algo novo, você precisa parar de fazer algo velho.", author: "Peter Drucker" },
+            { text: "A criatividade é a inteligência se divertindo.", author: "Albert Einstein" },
+            { text: "A inteligência artificial é a nova eletricidade.", author: "Andrew Ng"},
+            { text: "A maior invenção do século XIX foi a invenção do método de invenção.", author: "Alfred North Whitehead" },
+            { text: "O futuro pertence àqueles que acreditam na beleza de seus sonhos.", author: "Eleanor Roosevelt" },
+            { text: "A tecnologia é apenas uma ferramenta. No que diz respeito a motivar as crianças e conseguir que trabalhem juntas, o professor é o mais importante.", author: "Bill Gates" },
+            { text: "A inovação é a habilidade de ver a mudança como uma oportunidade, não uma ameaça.", author: "Steve Jobs"},
+            { text: "A melhor maneira de prever o futuro é inventá-lo.", author: "Alan Kay"},
+            { text: "A pergunta não é se as máquinas podem pensar, mas se os humanos o fazem.", author: "Alan Turing"},
+            { text: "A IA deve ser um esforço coletivo e ético — não podemos permitir que apenas empresas privadas decidam o futuro do pensamento automático.", author: "Yoshua Bengio"},
+            { text: "Toda inteligência é, no fundo, uma forma de compressão de informação.", author: "Ray Solomonoff"},
+            { text: "Ao contrário do que se pensa, o infinito não é um número, mas uma ideia.", author: "Isaac Newton"},
+            { text: "Quando uma porta se fecha, outra se abre; mas muitas vezes olhamos tanto tempo para a porta fechada que não vemos a que se abriu.", author: "Alexander Graham Bell"},
+            { text: "Uma vez que você tenha experimentado o voo, andará pela terra com os olhos voltados para o céu.", author: "Leonardo da Vinci"},
+            { text: "Pensar é o trabalho mais difícil que existe. Talvez por isso tão poucos o façam.", author: "Henry Ford"},
+            { text: "O verdadeiro desafio não é desenvolver novas ideias, mas escapar das antigas.", author: "John Maynard Keynes" },
+            { text: "A ciência de hoje é a tecnologia de amanhã.", author: "Edward Teller" }
+        ];
+
+        function changeQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            const quoteElement = document.getElementById("quote-text");
+            const authorElement = document.getElementById("quote-author");
+
+            quoteElement.style.opacity = 0;
+            authorElement.style.opacity = 0;
+
+            setTimeout(() => {
+                quoteElement.textContent = quote.text;
+                authorElement.textContent = quote.author;
+                quoteElement.style.opacity = 1;
+                authorElement.style.opacity = 1;
+            }, 500);
+        }
+
+        setInterval(changeQuote, 8000);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const quoteElement = document.getElementById("quote-text");
+            const authorElement = document.getElementById("quote-author");
+            quoteElement.style.transition = "opacity 0.5s ease";
+            authorElement.style.transition = "opacity 0.5s ease";
+        });
+
+        document.getElementById("signup-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("success-message").style.display = "block";
+                    this.reset();
+                    setTimeout(() => {
+                        document.getElementById("success-message").style.display = "none";
+                    }, 5000);
+                } else {
+                    alert("Ocorreu um erro. Por favor, tente novamente.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Erro na conexão. Tente novamente mais tarde.");
+            });
+        });
+    </script>
+</body>
+</html>
