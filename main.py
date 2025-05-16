@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi.staticfiles import StaticFiles
 
 import phonenumbers
-from validators import email as email_validator
+import re
 
 from crud import ContactCRUD
 from models import Contact
@@ -28,10 +28,13 @@ async def contact_router(
 ):
     number_obj = phonenumbers.parse(number, "BR")
     if not phonenumbers.is_valid_number(number_obj):
+        print("error_phone")
         return HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid phone number"
         )
-    if not email_validator(email):
+    pattern = re.compile(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    if not re.fullmatch(pattern, email):
+        print("error")
         return HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid email"
         )

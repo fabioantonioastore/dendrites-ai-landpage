@@ -6,7 +6,7 @@ from utils import uuid4_factory
 
 
 class Contact(Base):
-    __tablename__ = "contacs"
+    __tablename__ = "contacts"
 
     id = mapped_column(String, primary_key=True, default=uuid4_factory)
     name = mapped_column(String(200))
